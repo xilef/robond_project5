@@ -207,3 +207,7 @@ include_directories(include ${catkin_INCLUDE_DIRS})
 add_executable(add_markers src/add_markers.cpp)
 target_link_libraries(add_markers ${catkin_LIBRARIES})
 add_dependencies(add_markers add_markers_generate_messages_cpp)
+
+add_executable(add_markers_orig src/add_markers_orig.cpp)
+target_link_libraries(add_markers_orig ${catkin_LIBRARIES})
+add_dependencies(add_markers_orig add_markers_generate_messages_cpp)

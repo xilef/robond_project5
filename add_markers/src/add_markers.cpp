@@ -1,6 +1,6 @@
 #include <ros/ros.h>
 #include <visualization_msgs/Marker.h>
-#include <geometry_msgs/Pose.h>
+#include <geometry_msgs/Point.h>
 #include <std_srvs/Empty.h>
 #include "add_markers/MarkerData.h"
 
@@ -53,7 +53,7 @@ private:
 
 		m_pubMarker.publish(m_marker);
 
-		res.msg_feedback = "Marker set - x: " + std::to_string(req.position.x) + " y: " + std::to_string(req.position.x) + " z: " + std::to_string(req.position.z) + ".";
+		res.msg_feedback = "Marker set - x: " + std::to_string(req.position.x) + " y: " + std::to_string(req.position.y) + " z: " + std::to_string(req.position.z) + ".";
 
 		ROS_INFO_STREAM(res.msg_feedback);
 

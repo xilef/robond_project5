@@ -8,9 +8,12 @@ add_compile_options(-std=c++11)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  actionlib
-  move_base_msgs
-  roscpp
+	actionlib
+	move_base_msgs
+	geometry_msgs
+	std_srvs
+	add_markers
+	roscpp
 )
 
 ## System dependencies are found with CMake's conventions
@@ -198,8 +201,6 @@ include_directories(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
-include_directories(include ${catkin_INCLUDE_DIRS})
-
 add_executable(pick_objects src/pick_objects.cpp)
 target_link_libraries(pick_objects ${catkin_LIBRARIES})
-#add_dependencies(pick_objects pick_objects_generate_messages_cpp)
+add_dependencies(pick_objects ${catkin_EXPORTED_TARGETS})
