@@ -27,7 +27,13 @@ Go to the root of your catkin workspace and run `catkin_make` to build the whole
 
 ### Execute
 
-Run the script:
+To modify the start and end goal positions, open the launch file:
+
+`pick_objects/launch/pick_objects.launch`
+
+And modify the X, Y or W params with the prefix startGoal* or endGoal*.
+
+Once the satisfied with the goal positions run the script:
 
 `scripts/home_service.sh`
 
