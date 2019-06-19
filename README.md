@@ -1,8 +1,12 @@
-# Ball chaser
+# Home Service Bot
 
-Submission for Project 2 of the Udacity Robotics Software Engineer Nanodegree Program. This repository contains a robot that has the following features:
-- Chase a solid colored ball if it is within camera view.
-- If it is chasing a ball and it goes out of camera view, seek the ball by turning approximately 360 degrees then give up until a new ball is seen.
+Submission for Project 5 of the Udacity Robotics Software Engineer Nanodegree Program. This repository contains a robot that will go to a start goal with an orange marker displayed there, remove the marker then wait 5 seconds to simulate picking up something then go to an end goal.and show the marker again to simulate the robot dropping it off.
+
+Navigation is achieved using the [move_base](http://wiki.ros.org/move_base) package and sending navigation goals
+
+For localization and mapping there are 2 versions available:
+* Using the [rtabmap_ros](http://wiki.ros.org/rtabmap_ros) package to perform SLAM
+* Using the [AMCL](http://wiki.ros.org/amcl) package to perform localization with the map provided by [pgm_map_creator](https://github.com/udacity/pgm_map_creator)
 
 ## How to run
 
@@ -12,26 +16,18 @@ Make sure you have gazebo and rviz installed and you have setup a catkin workspa
 Clone the repo to your catkin workspace's src folder
 
 eg:
-`git clone https://github.com/xilef/robond_project1 /home/robond/workspace/catkin_ws/src
+`git clone https://github.com/xilef/robond_project5 /home/robond/workspace/catkin_ws/src
 `
 
 Go to the root of your catkin workspace and run `catkin_make` to build the whole repo
 
 ### Execute
 
-When you open a new terminal make sure to run first `source devel/setup.bash` from the root of your catkin workspace.
+Run the script:
 
-Once all the setup is done run:
+`scripts/home_service.sh`
 
-`roslaunch my_robot world.launch`
-
-to load the world.
-
-Open a new terminal, navigate to your catkin workspace and run:
-
-`roslaunch ball_chaser ball_chaser.launch`
-
-to run the ball chasing service
+The script will run the necessary nodes in sequence.
 
 ## License
 
