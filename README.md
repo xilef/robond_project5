@@ -8,6 +8,10 @@ For localization and mapping there are 2 versions available:
 * Using the [rtabmap_ros](http://wiki.ros.org/rtabmap_ros) package to perform SLAM
 * Using the [AMCL](http://wiki.ros.org/amcl) package to perform localization with the map provided by [pgm_map_creator](https://github.com/udacity/pgm_map_creator)
 
+The `add_markers` package is a service that handles the marker setting and removing.
+
+The `pick_objects` package is a node that handles the goal setting for the robot.
+
 ## How to run
 
 ### Setup
