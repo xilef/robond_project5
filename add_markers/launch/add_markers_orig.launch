@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+
+  <node name="add_markers_orig" type="add_markers_orig" pkg="add_markers" output="screen">
+    <rosparam>
+      startGoalX: 1.5
+      startGoalY: -3.7
+      endGoalX: -2.5
+      <!--endGoalY: -3.0-->
+    </rosparam>
+  </node>
+
+</launch>
