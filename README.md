@@ -1,14 +1,18 @@
 # Home Service Bot
 
-Submission for Project 5 of the Udacity Robotics Software Engineer Nanodegree Program. This repository contains a robot that will go to a start goal with an orange marker displayed there, remove the marker then wait 5 seconds to simulate picking up something then go to an end goal.and show the marker again to simulate the robot dropping it off.
+Submission for Project 5 of the Udacity Robotics Software Engineer Nanodegree Program. This repository contains a robot that will follow the sequence below:
+
+1. Go to a start goal designated by an orange marker.
+2. Remove the marker then wait 5 seconds to simulate an object pick up.
+3. Go to an end goal then show the marker again to simulate the object drop off.
 
 Navigation is achieved using the [move_base](http://wiki.ros.org/move_base) package and sending navigation goals
 
 For localization and mapping there are 2 versions available:
-* Using the [rtabmap_ros](http://wiki.ros.org/rtabmap_ros) package to perform SLAM
-* Using the [AMCL](http://wiki.ros.org/amcl) package to perform localization with the map provided by [pgm_map_creator](https://github.com/udacity/pgm_map_creator)
+* Using the [AMCL](http://wiki.ros.org/amcl) package to perform localization with the map provided by [slam_gmapping](https://github.com/ros-perception/slam_gmapping.git)
+* Using the [rtabmap_ros](http://wiki.ros.org/rtabmap_ros) package to perform SLAM (currently a work in progress)
 
-The `add_markers` package is a service that handles the marker setting and removing.
+The `add_markers` package is a service that handles the marker setting and hiding.
 
 The `pick_objects` package is a node that handles the goal setting for the robot.
 
@@ -33,7 +37,7 @@ To modify the start and end goal positions, open the launch file:
 
 And modify the X, Y or W params with the prefix startGoal* or endGoal*.
 
-Once the satisfied with the goal positions run the script:
+Once satisfied with the goal positions run the script:
 
 `scripts/home_service.sh`
 
