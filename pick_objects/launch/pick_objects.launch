@@ -4,11 +4,11 @@
 
   <node name="pick_objects" type="pick_objects" pkg="pick_objects" output="screen">
     <rosparam>
-      startGoalX: 4.0
-      startGoalY: -4.0
+      startGoalX: 1.5
+      startGoalY: -3.7
       startGoalW: -1.0
-      endGoalX: -5.0
-      endGoalY: -3.0
+      endGoalX: -2.5
+      <!--endGoalY: -3.0-->
       endGoalW: 1.0
       <!--xTarget1: -5.0
       yTarget1: -3.0

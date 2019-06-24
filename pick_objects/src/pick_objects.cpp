@@ -68,6 +68,7 @@ public:
 
 		if (m_mbClient.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
 		{
+			ROS_INFO("Start goal reached! Picking up something here.");
 			std_srvs::Empty req;
 			if (!m_clientHide.call(req))
 			{
@@ -83,13 +84,14 @@ public:
 		ros::Duration(5).sleep();
 
 		m_mbEndGoal.target_pose.header.stamp = ros::Time::now();
-		ROS_INFO("Sending end goal");
+		ROS_INFO("Pick up done. Sending end goal");
 		m_mbClient.sendGoal(m_mbEndGoal);
 
 		m_mbClient.waitForResult();
 
 		if (m_mbClient.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
 		{
+			ROS_INFO("End goal reached! Dropping off here.");
 			add_markers::MarkerData req;
 			req.request.position.x = m_mbEndGoal.target_pose.pose.position.x;
 			req.request.position.y = m_mbEndGoal.target_pose.pose.position.y;
