@@ -10,57 +10,75 @@
 
   <!-- Mapping Node -->
   <group ns="rtabmap">
-    <node pkg="nodelet" type="nodelet" name="rgbd_sync" args="standalone rtabmap_ros/rgbd_sync" output="screen">
-      <remap from="rgb/image"       to="$(arg rgb_topic)"/>
-      <remap from="depth/image"     to="$(arg depth_topic)"/>
-      <remap from="rgb/camera_info" to="$(arg camera_info_topic)"/>
-      <remap from="rgbd_image"      to="/camera/rgbd_image"/> <!-- output -->
-      
-      <!-- Should be true for not synchronized camera topics 
-           (e.g., false for kinectv2, zed, realsense, true for xtion, kinect360)-->
-      <param name="approx_sync"       value="true"/> 
-    </node>
-
     <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="--delete_db_on_start">
-		<param name="frame_id" type="string" value="robot_footprint"/>
 
-		<param name="subscribe_depth" type="bool" value="false"/>
-		<param name="subscribe_rgbd" type="bool" value="true"/>
-		<param name="subscribe_scan" type="bool" value="true"/>
+      <!-- Basic RTAB-Map Parameters -->
+      <param name="database_path"       type="string" value="$(arg database_path)"/>
+      <param name="frame_id"            type="string" value="robot_footprint"/>
+      <param name="odom_frame_id"       type="string" value="odom"/>
+      <param name="odom_tf_linear_variance"	type="string" value="0.001"/>
+      <param name="odom_tf_angular_variance" type="string" value="0.001"/>
+      <param name="subscribe_depth"     type="bool" value="true"/>
+      <param name="subscribe_scan"      type="bool" value="true"/>
+      <param name="approx_sync"			type="bool" value="true"/>
 
-		<remap from="odom" to="/odom"/>
-		<remap from="scan" to="/scan"/>
-		<remap from="rgbd_image" to="/camera/rgbd_image"/>
+      <!-- RTAB-Map Inputs -->
+      <remap from="scan" to="/scan"/>
+      <remap from="rgb/image" to="$(arg rgb_topic)"/>
+      <remap from="depth/image" to="$(arg depth_topic)"/>
+      <remap from="rgb/camera_info" to="$(arg camera_info_topic)"/>
 
-		<param name="queue_size" type="int" value="10"/>
+      <!-- RTAB-Map Output -->
+      <remap from="grid_map" to="/map"/>
 
-		<!-- RTAB-Map Output -->
-		<remap from="grid_map" to="/map"/>
+      <!-- Rate (Hz) at which new nodes are added to map -->
+      <param name="Rtabmap/DetectionRate"		type="string" value="5"/>
 
-		<!-- RTAB-Map's parameters -->
-		<param name="RGBD/NeighborLinkRefining" type="string" value="true"/>
-		<param name="RGBD/ProximityBySpace"     type="string" value="true"/>
-		<param name="RGBD/AngularUpdate"        type="string" value="0.01"/>
-		<param name="RGBD/LinearUpdate"         type="string" value="0.01"/>
-		<param name="RGBD/OptimizeFromGraphEnd" type="string" value="false"/>
-		<param name="Grid/FromDepth"            type="string" value="false"/> <!-- occupancy grid from lidar -->
-		<param name="Reg/Force3DoF"             type="string" value="true"/>
-		<param name="Reg/Strategy"              type="string" value="1"/> <!-- 1=ICP -->
-          
-		<!-- ICP parameters -->
-		<param name="Icp/VoxelSize"                 type="string" value="0.05"/>
-		<param name="Icp/MaxCorrespondenceDistance" type="string" value="0.1"/>
+      <!-- 2D SLAM -->
+      <param name="Reg/Force3DoF"				type="string" value="true"/>
+
+      <!-- Loop Closure Constraint -->
+      <!-- 0=Visual, 1=ICP (1 requires scan)-->
+      <param name="Reg/Strategy"				type="string" value="1"/>
+
+      <!-- Loop Closure Detection -->
+      <!-- 0=SURF 1=SIFT 2=ORB 3=FAST/FREAK 4=FAST/BRIEF 5=GFTT/FREAK 6=GFTT/BRIEF 7=BRISK 8=GFTT/ORB 9=KAZE -->
+      <param name="Kp/DetectorStrategy"			type="string" value="0"/>
+
+      <!-- Maximum visual words per image (bag-of-words) -->
+      <param name="Kp/MaxFeatures"				type="string" value="600"/>
+
+      <!-- Used to extract more or less SURF features -->
+      <param name="SURF/HessianThreshold"		type="string" value="300"/>
+
+      <!-- Minimum visual inliers to accept loop closure -->
+      <param name="Vis/MinInliers"				type="string" value="15"/>
+      <param name="Vis/FeatureType"				type="string" value="0"/>
+
+      <!-- Set to false to avoid saving data when robot is not moving -->
+      <param name="Mem/NotLinkedNodesKept"		type="string" value="false"/>
+      
+      <param name="RGBD/OptimizeMaxError"		type="string" value="3.0"/>
+      <!--<param name="RGBD/OptimizeFromGraphEnd"	type="string" value="false"/>-->
+      <param name="RGBD/AngularUpdate"			type="string" value="0.1"/>
+      <param name="RGBD/LinearUpdate"			type="string" value="0.1"/>
+      
+      <param name="Odom/Holonomic"				type="string" value="false"/>
+      
+      <param name="Grid/FromDepth"				type="string" value="false"/>
+      
+      <param name="Optimizer/Strategy"			type="string" value="1"/>
     </node>
     
     <!-- visualization with rtabmapviz -->
     <node pkg="rtabmap_ros" type="rtabmapviz" name="rtabmapviz" args="-d $(find rtabmap_ros)/launch/config/rgbd_gui.ini" output="screen">
- 		<param name="frame_id" type="string" value="robot_footprint"/>
+        <param name="subscribe_depth"             type="bool" value="true"/>
+        <param name="subscribe_scan"              type="bool" value="true"/>
+        <param name="frame_id"                    type="string" value="robot_footprint"/>
 
-		<param name="subscribe_depth" type="bool" value="false"/>
-		<param name="subscribe_rgbd" type="bool" value="true"/>
-		<param name="subscribe_scan" type="bool" value="true"/>
-
-		<remap from="rgbd_image" to="/camera/rgbd_image"/>
+        <remap from="rgb/image"       to="$(arg rgb_topic)"/>
+        <remap from="depth/image"     to="$(arg depth_topic)"/>
+        <remap from="rgb/camera_info" to="$(arg camera_info_topic)"/>
         <remap from="scan"            to="/scan"/>
     </node>
   </group>
