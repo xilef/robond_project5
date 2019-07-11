@@ -10,7 +10,7 @@ Navigation is achieved using the [move_base](http://wiki.ros.org/move_base) pack
 
 For localization and mapping there are 2 versions available:
 * Using the [AMCL](http://wiki.ros.org/amcl) package to perform localization with the map provided by [slam_gmapping](https://github.com/ros-perception/slam_gmapping.git)
-* Using the [rtabmap_ros](http://wiki.ros.org/rtabmap_ros) package to perform SLAM (currently a work in progress)
+* Using the [rtabmap_ros](http://wiki.ros.org/rtabmap_ros) package to perform SLAM
 
 The `add_markers` package is a service that handles the marker setting and hiding.
 
@@ -29,6 +29,10 @@ eg:
 
 Go to the root of your catkin workspace and run `catkin_make` to build the whole repo
 
+If you are trying to run the rtabmap version, please download the map from
+
+`https://www.dropbox.com/s/zj1alxdit90yq0y/rtabmap.db?dl=0`
+
 ### Execute
 
 To modify the start and end goal positions, open the launch file:
@@ -41,7 +45,13 @@ Once satisfied with the goal positions run the script:
 
 `scripts/home_service.sh`
 
-The script will run the necessary nodes in sequence.
+for the AMCL version, or
+
+`scripts/home_service_slam.sh`
+
+for the rtabmap version.
+
+The script will run the necessary nodes in sequence then sit back, relax and watch the robot try to awkwardly navigate around the house!
 
 ## License
 
